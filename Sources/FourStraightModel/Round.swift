@@ -25,7 +25,10 @@ public struct Round: Equatable, Codable {
 
     public enum State: Equatable, Codable {
         case waitingForPlayer(id: String)
-        case complete(winningPlayerID: String)
+        case complete(
+            winningPlayerID: String,
+            positions: [BoardPosition]
+        )
         case tie
     }
 }

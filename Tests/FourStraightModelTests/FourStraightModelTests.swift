@@ -21,7 +21,12 @@ private func currentPlayer(_ round: Round) -> Player? {
 }
 
 private func winnerID(_ round: Round) -> PlayerID? {
-    if case .complete(let winningPlayerID) = round.state { return winningPlayerID }
+    if case .complete(let winningPlayerID, _) = round.state { return winningPlayerID }
+    return nil
+}
+
+private func winningPositions(_ round: Round) -> [BoardPosition]? {
+    if case .complete(_, let positions) = round.state { return positions }
     return nil
 }
 
@@ -104,4 +109,40 @@ func tieOnSmallBoard() async throws {
         if case .tie = round.state { return true }
         return false
     }())
+}
+
+// MARK: - Test: Winning positions are captured
+
+@Test
+func winningPositionsAreCaptured() async throws {
+    var round = Round(rows: 6, columns: 7, winLength: 4, players: makePlayers())
+    
+    // Create a horizontal win for Player 1 (Alice)
+    // Columns: 0,1,1,2,2,3,3
+    // P1,P2,P1,P2,P1,P2,P1
+    try round.drop(in: 0) // P1
+    try round.drop(in: 6) // P2
+    try round.drop(in: 1) // P1
+    try round.drop(in: 5) // P2
+    try round.drop(in: 2) // P1
+    try round.drop(in: 4) // P2
+    try round.drop(in: 3) // P1 -> should complete horizontal win
+    print(round.debugDescription)
+    
+    // Assert winner is Player 1
+    #expect(winnerID(round) == "alice")
+    
+    // Assert winning positions are captured
+    guard let positions = winningPositions(round) else {
+        struct MissingPositions: Error {}
+        throw MissingPositions()
+    }
+    #expect(positions.count >= 4) // Should have at least 4 positions for a win
+    
+    // Verify the winning positions are all in the same row (row 5, which is the bottom row)
+    let winningRow = positions.first!.row
+    #expect(positions.allSatisfy { $0.row == winningRow })
+    
+    print("\n🎉 Winner: \(playerName(for: winnerID(round)!, in: round.players))")
+    print("Winning positions: \(positions.map { "(\($0.row),\($0.column))" }.joined(separator: " "))")
 }
