@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BoardPosition: Equatable, Codable {
+public struct BoardPosition: Hashable, Codable {
     public let row: Int
     public let column: Int
     
