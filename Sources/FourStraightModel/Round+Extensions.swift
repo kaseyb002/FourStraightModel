@@ -8,4 +8,14 @@ extension Round {
             }
         }
     }
+    
+    public var winningPositions: Set<BoardPosition> {
+        switch state {
+        case .complete(_, let positions):
+            return Set(positions)
+            
+        case .tie, .waitingForPlayer:
+            return []
+        }
+    }
 }
