@@ -13,7 +13,7 @@ extension Round.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .waitingForPlayer(let id): "Waiting for player id=\(id)"
-        case .complete(let winningPlayerID): "Complete — winner id=\(winningPlayerID)"
+        case .complete(let winningPlayerId): "Complete — winner id=\(winningPlayerId)"
         case .tie: "Tie"
         }
     }

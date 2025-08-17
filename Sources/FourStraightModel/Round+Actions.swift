@@ -30,7 +30,7 @@ extension Round {
             // Winner is whoever just played (cell is guaranteed non-nil)
             let winnerID = board[lastRow][lastCol]!
             state = .complete(
-                winningPlayerID: winnerID,
+                winningPlayerId: winnerID,
                 positions: findWinningPositions(fromRow: lastRow, col: lastCol)
             )
         } else if isBoardFull() {

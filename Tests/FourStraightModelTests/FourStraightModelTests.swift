@@ -21,7 +21,7 @@ private func currentPlayer(_ round: Round) -> Player? {
 }
 
 private func winnerID(_ round: Round) -> PlayerID? {
-    if case .complete(let winningPlayerID, _) = round.state { return winningPlayerID }
+    if case .complete(let winningPlayerId, _) = round.state { return winningPlayerId }
     return nil
 }
 
@@ -145,4 +145,24 @@ func winningPositionsAreCaptured() async throws {
     
     print("\n🎉 Winner: \(playerName(for: winnerID(round)!, in: round.players))")
     print("Winning positions: \(positions.map { "(\($0.row),\($0.column))" }.joined(separator: " "))")
+}
+import Foundation
+
+enum JSONPrettyError: Error { case utf8EncodingFailed }
+
+extension Encodable {
+    /// Get pretty JSON as a non-optional String (throws on failure)
+    func prettyJSON() throws -> String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        let data = try encoder.encode(self)
+        guard let s = String(data: data, encoding: .utf8) else { throw JSONPrettyError.utf8EncodingFailed }
+        return s
+    }
+
+    /// Print pretty JSON directly (avoids LLDB escaping)
+    func printPrettyJSON() {
+        do { print(try prettyJSON()) }
+        catch { print("❌ prettyJSON failed: \(error)") }
+    }
 }
