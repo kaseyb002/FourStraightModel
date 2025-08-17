@@ -18,4 +18,14 @@ extension Round {
             return []
         }
     }
+    
+    public func isPlayersTurn(playerID: String) -> Bool {
+        switch state {
+        case .waitingForPlayer(let id):
+            return playerID == id
+
+        case .complete, .tie:
+            return false
+        }
+    }
 }
