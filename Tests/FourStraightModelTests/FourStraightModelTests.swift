@@ -162,8 +162,6 @@ func firstEmptyColumn() async throws {
         for _ in 0 ..< rows {
             try round.drop(in: column)
         }
-        print(round.debugBoardString())
-        print(round.firstOpenColumn ?? 0)
         #expect(round.firstOpenColumn == column + 1)
     }
 }
