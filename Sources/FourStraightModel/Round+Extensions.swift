@@ -28,4 +28,15 @@ extension Round {
             return false
         }
     }
+    
+    public var firstOpenColumn: Int? {
+        for row in 0 ..< rows {
+            for column in 0 ..< columns {
+                if board[row][column] == nil {
+                    return column
+                }
+            }
+        }
+        return nil
+    }
 }

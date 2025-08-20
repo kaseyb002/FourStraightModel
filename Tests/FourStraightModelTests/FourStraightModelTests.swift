@@ -146,6 +146,28 @@ func winningPositionsAreCaptured() async throws {
     print("\n🎉 Winner: \(playerName(for: winnerID(round)!, in: round.players))")
     print("Winning positions: \(positions.map { "(\($0.row),\($0.column))" }.joined(separator: " "))")
 }
+
+@Test
+func firstEmptyColumn() async throws {
+    let rows: Int = 6
+    let columns: Int = 7
+    var round = Round(
+        rows: rows,
+        columns: columns,
+        winLength: 8,
+        players: makePlayers()
+    )
+    #expect(round.firstOpenColumn == 0)
+    for column in 0 ..< columns - 1 {
+        for _ in 0 ..< rows {
+            try round.drop(in: column)
+        }
+        print(round.debugBoardString())
+        print(round.firstOpenColumn ?? 0)
+        #expect(round.firstOpenColumn == column + 1)
+    }
+}
+
 import Foundation
 
 enum JSONPrettyError: Error { case utf8EncodingFailed }
