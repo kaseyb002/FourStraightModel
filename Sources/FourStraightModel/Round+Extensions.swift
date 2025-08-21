@@ -40,3 +40,15 @@ extension Round {
         return nil
     }
 }
+
+extension Round.State {
+    public var isComplete: Bool {
+        switch self {
+        case .complete, .tie:
+            return true
+            
+        case .waitingForPlayer:
+            return false
+        }
+    }
+}
