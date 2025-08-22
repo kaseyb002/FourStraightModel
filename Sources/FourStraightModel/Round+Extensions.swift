@@ -29,6 +29,20 @@ extension Round {
         }
     }
     
+    public func player(byID id: String) -> Player? {
+        players.first(where: { $0.id == id })
+    }
+    
+    public var currentPlayer: Player? {
+        switch state {
+        case .complete, .tie:
+            nil
+            
+        case .waitingForPlayer(let playerID):
+            player(byID: playerID)
+        }
+    }
+    
     public var firstOpenColumn: Int? {
         for row in 0 ..< rows {
             for column in 0 ..< columns {
