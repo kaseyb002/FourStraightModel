@@ -29,7 +29,7 @@ extension Round {
         
         log.append(
             .init(
-                playerID: currentID,
+                playerId: currentID,
                 column: column,
                 timestamp: .now,
                 isForced: isForced

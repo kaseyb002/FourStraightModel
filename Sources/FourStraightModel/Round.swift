@@ -37,18 +37,18 @@ public struct Round: Equatable, Codable {
     }
     
     public struct DropAction: Equatable, Codable {
-        public let playerID: String
+        public let playerId: String
         public let column: Int
         public let timestamp: Date
         public let isForced: Bool
         
         public init(
-            playerID: String,
+            playerId: String,
             column: Int,
             timestamp: Date,
             isForced: Bool
         ) {
-            self.playerID = playerID
+            self.playerId = playerId
             self.column = column
             self.timestamp = timestamp
             self.isForced = isForced

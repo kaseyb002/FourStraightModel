@@ -13,7 +13,7 @@ extension Round.State: CustomStringConvertible {
     public var description: String {
         switch self {
         case .waitingForPlayer(let id): "Waiting for player id=\(id)"
-        case .complete(let winningPlayerId): "Complete — winner id=\(winningPlayerId)"
+        case .complete(let winningPlayerId, _): "Complete — winner id=\(winningPlayerId)"
         case .tie: "Tie"
         }
     }
@@ -69,7 +69,7 @@ extension Round {
     public func debugLog() -> String {
         var text = ""
         for action in log {
-            guard let player: Player = players.first(where: { $0.id == action.playerID }) else {
+            guard let player: Player = players.first(where: { $0.id == action.playerId }) else {
                 continue
             }
             text += "\(player.name) dropped in column \(action.column + 1) at \(Self.formatter.string(from: action.timestamp))"
