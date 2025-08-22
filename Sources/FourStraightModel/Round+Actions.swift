@@ -1,7 +1,10 @@
 import Foundation
 
 extension Round {
-    public mutating func drop(in column: Int) throws {
+    public mutating func drop(
+        in column: Int,
+        isForced: Bool = false
+    ) throws {
         // Game must be ongoing
         guard case .waitingForPlayer(let currentID) = state else { return }
         // Column must exist
@@ -23,6 +26,15 @@ extension Round {
         
         // Update game state from the last move
         updateGameState(lastRow: lastRow, lastCol: column)
+        
+        log.append(
+            .init(
+                playerID: currentID,
+                column: column,
+                timestamp: .now,
+                isForced: isForced
+            )
+        )
     }
     
     private mutating func updateGameState(lastRow: Int, lastCol: Int) {
@@ -33,8 +45,10 @@ extension Round {
                 winningPlayerId: winnerID,
                 positions: findWinningPositions(fromRow: lastRow, col: lastCol)
             )
+            completed = .now
         } else if isBoardFull() {
             state = .tie
+            completed = .now
         } else {
             // Advance to the other player (assumes exactly 2 players)
             if case .waitingForPlayer(let currentID) = state {

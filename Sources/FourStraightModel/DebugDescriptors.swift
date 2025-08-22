@@ -58,3 +58,23 @@ extension Round: CustomDebugStringConvertible, CustomStringConvertible {
         """
     }
 }
+
+extension Round {
+    private static let formatter: DateFormatter = {
+        let formatter: DateFormatter = .init()
+        formatter.dateFormat = "yyyy/M/d h:mm:ss a"
+        return formatter
+    }()
+
+    public func debugLog() -> String {
+        var text = ""
+        for action in log {
+            guard let player: Player = players.first(where: { $0.id == action.playerID }) else {
+                continue
+            }
+            text += "\(player.name) dropped in column \(action.column + 1) at \(Self.formatter.string(from: action.timestamp))"
+            text += "\n"
+        }
+        return text
+    }
+}

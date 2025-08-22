@@ -145,6 +145,7 @@ func winningPositionsAreCaptured() async throws {
     
     print("\n🎉 Winner: \(playerName(for: winnerID(round)!, in: round.players))")
     print("Winning positions: \(positions.map { "(\($0.row),\($0.column))" }.joined(separator: " "))")
+    print("Log: \(round.debugLog())")
 }
 
 @Test
