@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:FourStraightModel}",
+            "name": "Debug FourStraightCLI",
+            "program": "${workspaceFolder:FourStraightModel}/.build/debug/FourStraightCLI",
+            "preLaunchTask": "swift: Build Debug FourStraightCLI"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:FourStraightModel}",
+            "name": "Release FourStraightCLI",
+            "program": "${workspaceFolder:FourStraightModel}/.build/release/FourStraightCLI",
+            "preLaunchTask": "swift: Build Release FourStraightCLI"
+        }
+    ]
+}
