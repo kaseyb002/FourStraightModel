@@ -17,7 +17,7 @@ extension Player {
     }
 }
 
-public struct AIPlayer: Equatable, Codable {
+public struct AIPlayer: Equatable, Codable, Sendable {
     public let id: PlayerID
     public var name: String
     public var imageURL: URL?

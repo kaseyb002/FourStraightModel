@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CheckerColor: String, Equatable, Codable {
+public enum CheckerColor: String, Equatable, Codable, Sendable {
     case red = "r"
     case yellow = "y"
     

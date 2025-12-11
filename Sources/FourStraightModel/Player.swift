@@ -2,7 +2,7 @@ import Foundation
 
 public typealias PlayerID = String
 
-public struct Player: Equatable, Codable {
+public struct Player: Equatable, Codable, Sendable {
     public let id: PlayerID
     public var name: String
     public var imageURL: URL?

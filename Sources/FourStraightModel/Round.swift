@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Round: Equatable, Codable {
+public struct Round: Equatable, Codable, Sendable {
     public let rows: Int
     public let columns: Int
     public let winLength: Int
@@ -27,7 +27,7 @@ public struct Round: Equatable, Codable {
         self.board = Array(repeating: Array(repeating: nil, count: columns), count: rows)
     }
 
-    public enum State: Equatable, Codable {
+    public enum State: Equatable, Codable, Sendable {
         case waitingForPlayer(id: String)
         case complete(
             winningPlayerId: String,
@@ -36,7 +36,7 @@ public struct Round: Equatable, Codable {
         case tie
     }
     
-    public struct DropAction: Equatable, Codable {
+    public struct DropAction: Equatable, Codable, Sendable {
         public let playerId: String
         public let column: Int
         public let timestamp: Date
